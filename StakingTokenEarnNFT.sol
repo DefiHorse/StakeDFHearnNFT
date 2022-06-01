@@ -10,6 +10,8 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "./lib/NFTPacks.sol";
+import "./lib/Withdrawable.sol";
+
 
 contract StakingDFHEarnNFT is Pausable, Ownable, ERC721Holder, StakingOptionsNFT, ReentrancyGuard {
 
@@ -182,30 +184,6 @@ contract StakingDFHEarnNFT is Pausable, Ownable, ERC721Holder, StakingOptionsNFT
         return _token.balanceOf(address(this));
     }
     
-    // amount BNB
-    function withdrawNative(uint256 _amount) public onlyOwner {
-        require(_amount > 0 , "_amount must be greater than 0");
-        require( address(this).balance >= _amount ,"balanceOfNative:  is not enough");
-        payable(msg.sender).transfer(_amount);
-    }
-    
-    function withdrawToken(IERC20 _token, uint256 _amount) public onlyOwner {
-        require(_amount > 0 , "_amount must be greater than 0");
-        require(_token.balanceOf(address(this)) >= _amount , "balanceOfToken:  is not enough");
-        _token.transfer(msg.sender, _amount);
-    }
-    
-    // all BNB
-    function withdrawNativeAll() public onlyOwner {
-        require(address(this).balance > 0 ,"balanceOfNative:  is equal 0");
-        payable(msg.sender).transfer(address(this).balance);
-    }
-  
-    function withdrawTokenAll(IERC20 _token) public onlyOwner {
-        require(_token.balanceOf(address(this)) > 0 , "balanceOfToken:  is equal 0");
-        _token.transfer(msg.sender, _token.balanceOf(address(this)));
-    }
-
     event Received(address, uint);
     receive () external payable {
         emit Received(msg.sender, msg.value);

@@ -65,9 +65,9 @@ contract StakingOptionsNFT is Ownable {
                 _optionInfoAmountStakedToken[i], 
                 _optionInfoDay[i], 
                 _optionInfocontractsNFT[i],
+                _optionInfoRewardAmountNFT[i],
                 _optionInfoStartTime[i],
                 _optionInfoEndTime[i],
-                _optionInfoRewardAmountNFT[i],
                 _optionInfoLockRewardDay[i]
             );
             infoOptions[countIdOptions] = info;
